@@ -1,21 +1,31 @@
 // calculate_roman.go
 package main
 
-import "fmt"
-
-// Функция для вывода результата с поддержкой римских чисел.
-func printResultRoman(result string) {
-	fmt.Println("Результат:", result)
-}
-
 // Функция для выполнения операции с римскими числами.
-func calculateRomanExpression(input string) {
-	// Разбор выражения с поддержкой римских чисел.
-	num1, operator, num2 := parseExpressionRoman(input)
+func calculateRomanResult(num1 int, operator string, num2 int) string {
+	result := 0
+	switch operator {
+	case "+":
+		result = num1 + num2
+	case "-":
+		result = num1 - num2
+	case "*":
+		result = num1 * num2
+	case "/":
+		// Проверка деления нацело.
+		if num2 == 0 || num1%num2 != 0 {
+			panic("невозможно выполнить деление римских чисел")
+		}
+		result = num1 / num2
+	default:
+		panic("неверный оператор: " + operator)
+	}
 
-	// Выполнение операции и получение результата.
-	result := calculateRomanResult(num1, operator, num2)
+	// Проверка на отрицательный результат.
+	if result <= 0 {
+		panic("результат римского выражения не может быть отрицательным или нулевым")
+	}
 
-	// Вывод результата с поддержкой римских чисел.
-	printResultRoman(result)
+	// Преобразование арабского результата в римское число.
+	return arabicToRomanNumber(result)
 }
