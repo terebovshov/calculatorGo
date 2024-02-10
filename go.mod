@@ -1,3 +1,3 @@
-module calculatorApp
+module calculatorGo
 
 go 1.21
